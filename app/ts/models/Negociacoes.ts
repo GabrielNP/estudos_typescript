@@ -6,7 +6,6 @@ class Negociacoes {
     adiciona(negociacao : Negociacao) {
 
         this._negociacoes.push(negociacao)
-        console.log("Também adicionei a negociação!")
     }
 
     paraArray() : Negociacao[] {
