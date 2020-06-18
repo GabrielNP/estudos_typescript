@@ -1,5 +1,7 @@
 namespace Views {
-    export class NegociacoesView extends Views.View<Negociacoes> {
+
+    import view = Views.View
+    export class NegociacoesView extends view<Negociacoes> {
 
         template(model: Negociacoes):string {
             return `
