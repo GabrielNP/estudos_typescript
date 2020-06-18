@@ -1,6 +1,7 @@
 # Repositório de estudos de Typescript baseado em:
 
 https://cursos.alura.com.br/course/typescript-parte1
+https://cursos.alura.com.br/course/typescript-parte2
 
 # Infraestrutura necessária
 Node JS 6.x ou superior
