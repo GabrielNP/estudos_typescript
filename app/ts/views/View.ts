@@ -10,6 +10,8 @@ export abstract class View<T> {
     }
 
     update(model: T) {
+
+        const t1 = performance.now();
         
         let template = this.template(model);
         
@@ -17,6 +19,9 @@ export abstract class View<T> {
             template = template.replace(/<script>[\s\S]*?<\/script>/, '');
         
         this._elemento.html(this.template(model));
+
+        const t2 = performance.now();
+        console.log(`Tempo de execução do método adiciona(): ${(t2 - t1)/1000} segundos`);
     }
 
     abstract template(model: T): string;
