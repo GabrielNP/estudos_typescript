@@ -19,7 +19,7 @@ export class NegociacaoController {
     }
 
     @logarTempoDeExecucao()
-    adiciona = (event : Event) => {
+    adiciona(event : Event){
 
         event.preventDefault();
 
