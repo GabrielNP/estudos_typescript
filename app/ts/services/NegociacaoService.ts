@@ -14,3 +14,8 @@ export class NegociacaoService {
 
     }
 }
+
+export interface ResponseHandler {
+
+    (res: Response): Response
+}

@@ -1,7 +1,7 @@
 import { NegociacoesView, MensagemView } from '../views/index'
 import { Negociacao, Negociacoes } from '../models/index'
 import { domInject, throttle } from '../helpers/decorators/index'
-import { NegociacaoService } from '../services/index'
+import { NegociacaoService, ResponseHandler } from '../services/index'
 
 export class NegociacaoController {
 
@@ -54,21 +54,15 @@ export class NegociacaoController {
     @throttle()
     importaDados() {
 
-        function isOk(res: Response) {
-
-            if (res.ok) return res;
-            else    throw new Error(res.statusText);
+        const isOk: ResponseHandler = (res: Response) => {
+            if(res.ok) return res;
+            throw new Error(res.statusText);
         }
 
         this._service
             .obterNegociacoes(isOk)
             .then((negociacoes: Negociacao[]) => {
                 negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
-            //     this._negociacoesView.update(this._negociacoes);
-            // })
-            // .catch((err: Error) => {
-            //     this._mensagemView.update('Não foi possível importar os dados.');
-            //     console.log(err.message);
             });
     }
 }
