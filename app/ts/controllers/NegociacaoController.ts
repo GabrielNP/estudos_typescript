@@ -65,6 +65,7 @@ export class NegociacaoController {
             .obterNegociacoes(isOk)
             .then((negociacoes: Negociacao[]) => {
                 negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                this._negociacoesView.update(this._negociacoes);
             });
     }
 }
