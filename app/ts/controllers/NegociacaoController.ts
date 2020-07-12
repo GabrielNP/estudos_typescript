@@ -54,31 +54,30 @@ export class NegociacaoController {
     }
 
     @throttle()
-    importaDados() {
+    async importaDados() {
 
-        const isOk: ResponseHandler = (res: Response) => {
-            if(res.ok) return res;
-            throw new Error(res.statusText);
-        }
-
-        this._service
-            .obterNegociacoes(isOk)
-            .then((negociacoesParaImportar: Negociacao[]) => {
-
-                const negociacoesJaImportadas = this._negociacoes.paraArray();
-
-                negociacoesParaImportar
-                    .filter(negociacao => 
-                        !negociacoesJaImportadas.some(jaImportada => 
-                            negociacao.ehIgual(jaImportada)
-                        )
+        try {     
+            const isOk: ResponseHandler = (res: Response) => {
+                if(res.ok) return res;
+                throw new Error(res.statusText);
+            }       
+            const negociacoesParaImportar = await this._service.obterNegociacoes(isOk);
+            const negociacoesJaImportadas = this._negociacoes.paraArray();
+            
+            negociacoesParaImportar
+                .filter(negociacao => 
+                    !negociacoesJaImportadas.some(jaImportada => 
+                        negociacao.ehIgual(jaImportada)
                     )
-                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                )
+                .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+    
+            this._negociacoesView.update(this._negociacoes);
 
-                this._negociacoesView.update(this._negociacoes);
-            })
-            .catch(err => this._mensagemView.update(err.message));
-    }
+        } catch(err) {
+            this._mensagemView.update(err.message);
+        }
+    }        
 }
 
 enum DiaDaSemana {
